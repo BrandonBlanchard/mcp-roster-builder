@@ -1,0 +1,16 @@
+.roster-builder {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-content {
+    display: flex;
+    overflow: hidden;   
+    flex-grow:2;
+}
