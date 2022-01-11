@@ -6,7 +6,11 @@ import { ApplicationState, Page, Status } from './models';
 export const applicationContextDefault: ApplicationState = {
   page: Page.home,
   cardLibrary: null,
-  cardLibraryStatus: Status.init
+  cardLibraryStatus: Status.init,
+  rosterList: [],
+  rosterState: {
+    selectedRosterId: null
+  }
 };
 
 // Create context add placeholder dispatch

@@ -1,7 +1,7 @@
-import { List, ListItemButton, ListItemText, MenuItem, Modal, Select } from '@mui/material';
+import { Divider, List, ListItem, ListItemButton, ListItemText, MenuItem, Modal, Select } from '@mui/material';
 import React, { useState } from 'react';
 import { CardTypeKey, cardTypeMeta, CardTypeMeta } from '../../data/card-type-meta';
-import { McpCard } from '../../service-models/card-models';
+import { CharacterCard, McpCard } from '../../service-models/card-models';
 import { useApplicationContext } from '../../state/application-context';
 import { getCardTitleSubtitle } from '../../utils/card-data';
 import { CardSearchHeader } from '../card-search-header';
@@ -20,7 +20,7 @@ export const SearchPage = () => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            <PageHead title="Search"/>
+            <PageHead title="Search" />
             <CardSearchHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} >
                 <Select
                     variant='standard'
@@ -39,19 +39,23 @@ export const SearchPage = () => {
             </CardSearchHeader>
 
             <List sx={{ bgcolor: 'background.paper', overflow: 'scroll', width: '100%' }}>
-                {filteredCards.map((card, i) => {
+                {filteredCards.map((card: McpCard, i) => {
                     const { title, subtitle } = getCardTitleSubtitle(cardTypeFilter, card);
 
                     return (
-                        <ListItemButton key={`${title}_${i}`} onClick={() => setSelectedCard(card)}>
-                            <ListItemText primary={title} secondary={subtitle} />
-                        </ListItemButton>
+                        <ListItem key={card.id}>
+                            <ListItemButton key={`${title}_${i}`} onClick={() => setSelectedCard(card)} style={{ display: "flex", justifyContent: "space-between" }}>
+                                <ListItemText primary={title} secondary={subtitle} />
+                                {cardTypeFilter.dataKey === 'characters' && <ListItemText style={{ textAlign: 'right' }} primary={(card as CharacterCard).threatLevel} />}
+                            </ListItemButton>
+                            <Divider light />
+                        </ListItem>
                     )
                 })}
             </List>
 
             {selectedCard !== null && <ModalCardContent onClose={() => setSelectedCard(null)} card={selectedCard} meta={cardTypeFilter} />}
 
-        </div>
+        </div >
     )
 };

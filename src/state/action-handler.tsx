@@ -1,5 +1,5 @@
 
-import { ApplicationAction, loadCardDataReducer, setCardLibStatusReducer, setPageReducer } from "./actions";
+import { ApplicationAction, createRosterReducer, deleteRosterReducer, loadCardDataReducer, loadRosterReducer, saveRosterReducer, setCardLibStatusReducer, setPageReducer, setSelectedRosterReducer, updateRosterReducer } from "./actions";
 import { ApplicationState } from "./models";
 
 
@@ -15,7 +15,18 @@ const actionHandler = (
         return loadCardDataReducer(state, action.data);
       case 'setCardLibStatusAction':
         return setCardLibStatusReducer(state, action.data);
-
+      case 'loadRosterAction':
+        return loadRosterReducer(state, action.data);
+      case 'saveRosterAction':
+        return saveRosterReducer(state, action.data);
+      case 'createRosterAction':
+        return createRosterReducer(state, action.data);
+      case 'deleteRosterAction':
+        return deleteRosterReducer(state, action.data);
+      case 'updateRosterAction':
+        return updateRosterReducer(state, action.data);
+      case 'setSelectedRosterAction':
+        return setSelectedRosterReducer(state, action.data);
     }
   } catch (e) {
     // When a reducer throws an error, announce the issue and use the last good state to keep things rolling

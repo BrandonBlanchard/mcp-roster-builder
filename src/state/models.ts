@@ -14,8 +14,21 @@ export enum Status {
   failed
 }
 
+export interface Roster {
+  id: string;
+  name: string;
+  charactersIds: string[];
+  affiliation: string;
+}
+
+export interface RosterState {
+  selectedRosterId: string | null;
+}
+
 export interface ApplicationState {
   page: Page;
   cardLibrary: CardData | null;
   cardLibraryStatus: Status;
+  rosterList: Roster[];
+  rosterState: RosterState;
 };

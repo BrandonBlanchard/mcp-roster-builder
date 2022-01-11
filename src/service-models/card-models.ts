@@ -1,4 +1,5 @@
 export interface CharacterCard {
+    id: string;
     name: string;
     threatLevel: string;
     alias: string;
@@ -10,6 +11,7 @@ export interface CharacterCard {
   }
   
   export interface CrisisCard {
+    id: string;
     crisis: string;
     threatLevel: string;
     setup: string;
@@ -20,6 +22,7 @@ export interface CharacterCard {
   }
   
   export interface TeamTacticsCard {
+    id: string;
     tactic: string;
     affiliations: string[];
     characters: string;
