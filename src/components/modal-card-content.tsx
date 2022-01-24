@@ -2,12 +2,12 @@ import { AppBar, Button, ButtonGroup, Container, Divider, Paper, styled } from '
 import React, { useEffect, useState } from 'react';
 import Lightbox from 'react-image-lightbox';
 import { CardTypeMeta } from '../data/card-type-meta';
-import { McpCard } from '../service-models/card-models';
+import { Card } from '../service-models/card-models';
 import { getCardImages, CardImage } from '../utils/card-data';
 import 'react-image-lightbox/style.css';
 
 interface ModalCardContentProps {
-    card: McpCard;
+    card: Card;
     meta: CardTypeMeta;
     onClose: () => void;
 }
