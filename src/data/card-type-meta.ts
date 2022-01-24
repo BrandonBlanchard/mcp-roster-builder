@@ -13,7 +13,7 @@ export const cardTypeMeta: Record<CardTypeKey, CardTypeMeta> = {
     'crisisCards': {
         label: 'Crisis Cards',
         dataKey: 'crisisCards'
-    },
+    }, 
     'teamTactics': {
         label: 'Team Tactics',
         dataKey: 'teamTactics'

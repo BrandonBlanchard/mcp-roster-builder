@@ -1,4 +1,4 @@
-import { CardData } from "../service-models/card-models";
+import { Affiliation, CardData, CharacterCard, CrisisCard, InfinityGem, McpData, TeamTacticsCard } from "../service-models/card-models";
 
 export enum Page {
     home,
@@ -31,4 +31,13 @@ export interface ApplicationState {
   cardLibraryStatus: Status;
   rosterList: Roster[];
   rosterState: RosterState;
+
+  mcpData: Partial<Record<string, McpData>>;
+
+  affiliations: string[];
+  gems: string[];
+  characters: string[];
+  crisis: string[];
+  tactics: string[];
+  deploymentLetterToId: Record<string, string>
 };

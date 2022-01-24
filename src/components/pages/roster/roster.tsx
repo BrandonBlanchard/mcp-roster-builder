@@ -5,9 +5,7 @@ import { useApplicationContext } from '../../../state/application-context';
 import { PageHead } from '../../page-head';
 import AddIcon from '@mui/icons-material/Add';
 import { AddNewRoster } from './components/add-new-roster';
-import { CharacterCard } from '../../../service-models/card-models';
 import { Roster } from '../../../state/models';
-import { getCardTitleSubtitle } from '../../../utils/card-data';
 
 export const RosterPage: React.FC = () => {
     const [state, dispatch] = useApplicationContext();
@@ -29,8 +27,6 @@ export const RosterPage: React.FC = () => {
     const createRosterCallback = (name: string) => {
         dispatch(createRosterActionCreator({ name }));
     }
-
-    console.log(state.rosterState.selectedRosterId)
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', width: '100%', alignSelf: 'stretch' }}>

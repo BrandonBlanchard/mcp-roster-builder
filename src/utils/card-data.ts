@@ -1,5 +1,5 @@
 import { CardTypeMeta } from "../data/card-type-meta";
-import { CharacterCard, CrisisCard, McpCard, TeamTacticsCard } from "../service-models/card-models";
+import { CharacterCard, CrisisCard, Card, TeamTacticsCard } from "../service-models/card-models";
 
 export interface TitleSubtitleProps { title: string; subtitle: string; };
 const getCharacterTitleSubtitle = (character: CharacterCard): TitleSubtitleProps => ({
@@ -17,7 +17,7 @@ const getTacticsTitleSubtitle = (card: TeamTacticsCard): TitleSubtitleProps => (
     subtitle: card.affiliations.join(', ')
 });
 
-export const getCardTitleSubtitle = (meta: CardTypeMeta, card: McpCard): TitleSubtitleProps => {
+export const getCardTitleSubtitle = (meta: CardTypeMeta, card: Card): TitleSubtitleProps => {
     switch (meta.dataKey) {
         case 'characters':
             return getCharacterTitleSubtitle(card as CharacterCard);
@@ -42,7 +42,7 @@ const getCrisisCardImage = (card: CrisisCard): CardImage[] => ([{ label: card.cr
 
 const getTacticsImage = (card: TeamTacticsCard): CardImage[] => ([{ label: card.tactic, imageUrl: card.card}]);
 
-export const getCardImages = (meta: CardTypeMeta, card: McpCard): CardImage[] => {
+export const getCardImages = (meta: CardTypeMeta, card: Card): CardImage[] => {
     switch (meta.dataKey) {
         case 'characters':
             return getCharacterImages(card as CharacterCard);
