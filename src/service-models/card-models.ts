@@ -41,6 +41,7 @@ export type McpData = TeamTacticsCard | CrisisCard | CharacterCard | Affiliation
 
 // Local model
 export enum McpDataType {
+  mcpData,
   crisis,
   character,
   infinityGem,
@@ -53,6 +54,7 @@ export interface InfinityGem {
     name: string;
     color: string;
     threatLevel: number;
+    searchString: string;
 }
 
 export interface Affiliation {
@@ -61,6 +63,7 @@ export interface Affiliation {
   characterIds: string[];
   teamTactics: string[];
   leaders: string[];
+  searchString: string;
 }
 
 export interface CardData {

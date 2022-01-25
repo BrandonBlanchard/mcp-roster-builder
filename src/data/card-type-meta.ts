@@ -1,22 +1,32 @@
-export type CardTypeKey = 'characters' | 'crisisCards' | 'teamTactics';
+import { McpDataType } from "../service-models/card-models";
+
+export type CardTypeKey = 'characters' | 'crisis' | 'tactics' | 'gems';
 
 export interface CardTypeMeta {
     label: string;
-    dataKey: CardTypeKey
+    dataKey: CardTypeKey;
+    cardType: McpDataType
 }
 
 export const cardTypeMeta: Record<CardTypeKey, CardTypeMeta> = {
     'characters': {
         label: 'Characters',
-        dataKey: 'characters'
+        dataKey: 'characters',
+        cardType: McpDataType.character
     },
-    'crisisCards': {
+    'crisis': {
         label: 'Crisis Cards',
-        dataKey: 'crisisCards'
+        dataKey: 'crisis',
+        cardType: McpDataType.crisis
     }, 
-    'teamTactics': {
+    'tactics': {
         label: 'Team Tactics',
-        dataKey: 'teamTactics'
+        dataKey: 'tactics',
+        cardType: McpDataType.tactic
+    },
+    'gems': {
+        label: 'Infinity Gems',
+        dataKey: 'gems',
+        cardType: McpDataType.infinityGem
     }
-
 };
