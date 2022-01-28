@@ -1,4 +1,4 @@
-import { Button, FormControl, Input, InputAdornment } from '@mui/material';
+import { Button, FormControl, Input, InputAdornment, InputLabel } from '@mui/material';
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close';
@@ -12,16 +12,19 @@ export const CardSearchHeader: React.FC<CardSearchHeaderProps> = ({ setSearchTer
 
 
     return (
-        <>
+        <div style={{marginLeft: 10, marginRight: 10, display: 'flex', flexDirection: 'column'}}>
             {children}
-            <FormControl variant="standard" style={{ marginTop: '5px' }}>
+            <FormControl style={{ marginTop:  10 }}>
+                <InputLabel id="card-type">Search</InputLabel>
                 <Input
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     id="input-with-icon-adornment"
                     startAdornment={
                         <InputAdornment position="start">
+                            <Button disabled>
                             <SearchIcon />
+                            </Button>
                         </InputAdornment>
                     }
                     endAdornment={
@@ -34,6 +37,6 @@ export const CardSearchHeader: React.FC<CardSearchHeaderProps> = ({ setSearchTer
 
                 />
             </FormControl>
-        </>
+        </div>
     );
 }
