@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { RosterBuilder } from './components/roster-builder';
+import { RosterBuilderApp } from './components/roster-builder';
 import 'microns/fonts/microns.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
@@ -25,7 +25,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <ApplicationProvider>
         <div className="App">
-          <RosterBuilder />
+          <RosterBuilderApp />
         </div>
       </ApplicationProvider>
     </ThemeProvider>

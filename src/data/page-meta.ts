@@ -16,6 +16,9 @@ export const pageMeta: Record<Page, PageMeta> = {
     },
     [Page.search]: {
         label: 'Search'
+    },
+    [Page.rosterBuilder]: {
+        label: 'Roster Builder'
     }
 
 }

@@ -1,5 +1,5 @@
 import { Affiliation, CharacterCard, CrisisCard, InfinityGem, McpData, McpDataType, TeamTacticsCard } from "../service-models/card-models";
-import { ApplicationState, Status } from "../state/models";
+import { ApplicationState, Roster, Status } from "../state/models";
 
 const defaultCrisis: CrisisCard = {
     id: '',
@@ -74,6 +74,14 @@ export const defaultMcpData: McpData = {
     gemCapacity: 0,
     gemsAvailable: [],
     leader: ''
+}
+
+export const defaultRoster: Roster = {
+    id: '',
+    name: '',
+    affiliation: '',
+    tacticsIds: [],
+    charactersIds: []
 }
 
 const getDefaultForMcpDataType = (dataType: McpDataType): McpData => {

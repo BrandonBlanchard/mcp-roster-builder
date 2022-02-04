@@ -1,11 +1,11 @@
-import { Divider, Fab, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { Fab, List, ListItemButton, ListItemText } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { createRosterActionCreator, loadRosterActionCreator, saveRosterActionCreator, setSelectedRosterActionCreator } from '../../../state/actions';
+import { createRosterActionCreator, loadRosterActionCreator, saveRosterActionCreator, setPageActionCreator, setSelectedRosterActionCreator } from '../../../state/actions';
 import { useApplicationContext } from '../../../state/application-context';
 import { PageHead } from '../../page-head';
 import AddIcon from '@mui/icons-material/Add';
 import { AddNewRoster } from './components/add-new-roster';
-import { Roster } from '../../../state/models';
+import { Page, Roster } from '../../../state/models';
 
 export const RosterPage: React.FC = () => {
     const [state, dispatch] = useApplicationContext();
@@ -28,10 +28,12 @@ export const RosterPage: React.FC = () => {
         dispatch(createRosterActionCreator({ name }));
     }
 
+    const goToRosterBuilder = (id: string) => dispatch([setSelectedRosterActionCreator({ rosterId: id }), setPageActionCreator({ page: Page.rosterBuilder })]);
+    
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', width: '100%', alignSelf: 'stretch' }}>
             <PageHead title="Roster" />
-
 
             <div style={{ position: 'absolute', right: '20px', bottom: '150px' }} onClick={() => setIsCreatingNewRoster(true)}>
                 <Fab color="primary" aria-label="add" >
@@ -43,7 +45,7 @@ export const RosterPage: React.FC = () => {
 
             <List sx={{ bgcolor: 'background.paper', overflow: 'scroll', width: '100%' }}>
                 {state.rosterList.map((roster: Roster, i) => (
-                    <ListItemButton key={roster.id} selected={roster.id === state.rosterState.selectedRosterId} onClick={() => dispatch(setSelectedRosterActionCreator({ rosterId: roster.id }))} style={{ display: "flex", justifyContent: "space-between" }}>
+                    <ListItemButton key={roster.id} selected={roster.id === state.rosterState.selectedRosterId} onClick={() => goToRosterBuilder(roster.id)} style={{ display: "flex", justifyContent: "space-between" }}>
                         <ListItemText primary={roster.name} secondary={roster.affiliation} />
                     </ListItemButton>
                 ))}

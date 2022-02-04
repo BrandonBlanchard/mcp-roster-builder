@@ -1,4 +1,4 @@
-export type ArrayRecordKey = 'roster'
+export type ArrayRecordKey = 'roster' | 'roster-v1'
 
 
 export const getArrayRecord = <T>(key: ArrayRecordKey): T[] => {

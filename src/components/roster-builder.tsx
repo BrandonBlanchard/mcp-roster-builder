@@ -5,10 +5,12 @@ import { Page, Status } from '../state/models';
 import { AppNev as AppNav } from './app-nav';
 import { PlayPage, RosterPage, SearchPage } from './pages';
 import { HomePage } from './pages/home';
+import { RosterBuilder } from './pages/roster-builder';
 import './roster-builder.css';
 
-export const RosterBuilder: React.FC = () => {
+export const RosterBuilderApp: React.FC = () => {
     const [state, dispatch] = useApplicationContext();
+    const { page } = state;
 
     useEffect(() => {
         if (state.cardLibrary === null || state.cardLibraryStatus === Status.failed) {
@@ -20,10 +22,11 @@ export const RosterBuilder: React.FC = () => {
         <div className='roster-builder'>
           
             <div className='app-content'>
-                {state.page === Page.home && <HomePage />}
-                {state.page === Page.search && <SearchPage />}
-                {state.page === Page.roster && <RosterPage />}
-                {state.page === Page.play && <PlayPage />}
+                {page === Page.home && <HomePage />}
+                {page === Page.search && <SearchPage />}
+                {page === Page.roster && <RosterPage />}
+                {page === Page.play && <PlayPage />}
+                {page === Page.rosterBuilder && <RosterBuilder/>}
             </div>
             <AppNav />
             <div className='roster-builder__background' />

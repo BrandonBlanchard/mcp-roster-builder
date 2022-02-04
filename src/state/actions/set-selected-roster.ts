@@ -1,7 +1,7 @@
 import { ApplicationState } from "../models";
 
 export interface SetSelectedRosterActionArgs {
-    rosterId: string;
+    rosterId: string | null;
 };
 
 export interface SetSelectedRosterAction {

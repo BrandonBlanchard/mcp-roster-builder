@@ -1,19 +1,36 @@
 import React from 'react';
 import './app-head.css';
-import { AppBar, Container, Toolbar, Typography } from '@mui/material';
+import { Container, Divider, IconButton, Toolbar, Typography } from '@mui/material';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 export interface PageHeadProps {
     title: string;
-    subtitle?: string;
+    backCB?: () => void;
 }
 
-export const PageHead: React.FC<PageHeadProps> = ({ title, subtitle = null }) => {
+export const PageHead: React.FC<PageHeadProps> = ({ title, backCB = null }) => {
 
     return (
-        <Container style={{ textAlign: 'left'}}>
-            <Typography variant="h3" component="div" sx={{ flexGrow: 1, marginTop: '30px', marginBottom: '20px' }}> {title} </Typography>
-            { subtitle !== null && <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginTop: '40px', marginBottom: '10px' }}> { subtitle} </Typography>}
-        </Container>
+        <>
+            <Container style={{
+                textAlign: 'left',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                height: '60px',
+                minHeight: '60px',
+                alignItems: 'center',
+            }}>
+                <div style={{ width: '50px'}}>
+                {backCB && <IconButton onMouseDown={backCB}>  <ArrowBackIosNewIcon />  </IconButton>}
+                </div>
+                <Typography variant='overline' component="div"> {title} </Typography>
+                <div style={{ width: '50px'}}></div>
+
+            </Container>
+            <Divider style={{ width: '100%', marginBottom: '20px'}} />
+        </>
 
     )
 }

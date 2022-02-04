@@ -1,10 +1,11 @@
-import { Affiliation, CardData, CharacterCard, CrisisCard, InfinityGem, McpData, TeamTacticsCard } from "../service-models/card-models";
+import { CardData, McpData } from "../service-models/card-models";
 
 export enum Page {
     home,
     search,
     play,
-    roster
+    roster,
+    rosterBuilder
 }
 
 export enum Status {
@@ -17,8 +18,9 @@ export enum Status {
 export interface Roster {
   id: string;
   name: string;
-  charactersIds: string[];
   affiliation: string;
+  charactersIds: string[];
+  tacticsIds: string[];
 }
 
 export interface RosterState {

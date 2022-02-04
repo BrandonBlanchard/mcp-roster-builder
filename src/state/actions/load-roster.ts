@@ -1,4 +1,5 @@
 import { getArrayRecord } from "../../local-storage-service";
+import { defaultRoster } from "../../utils/card-data-v2-";
 import { ApplicationState, Roster } from "../models";
 
 export interface LoadRosterActionArgs {};
@@ -18,7 +19,7 @@ export const loadRosterReducer = (state: ApplicationState, { }: LoadRosterAction
 
     const nextState = {
         ...state,
-        rosterList: rosterData
+        rosterList: rosterData.map((roster) => ({ ...defaultRoster, ...roster }))
     };
 
     return nextState;

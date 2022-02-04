@@ -7,12 +7,14 @@ interface McpListProps {
     cards: string[];
     cardType: McpDataType;
     selectCallback(id: string): void;
+    addRemoveCallback?: (id:string, cardType: McpDataType) => void;
+    selectedItemsHash?: Record<string, {}>;
 }
 
-export const McpList: React.FC<McpListProps> = ({ cards, cardType, selectCallback }) => {
+export const McpList: React.FC<McpListProps> = ({ cards, cardType, selectCallback, addRemoveCallback, selectedItemsHash }) => {
     return (
         <List sx={{ bgcolor: 'background.paper', overflow: 'scroll', width: '100%' }}>
-            {cards.map((cardId) => <McpListItem key={cardId} cardId={cardId} cardType={cardType} selectCallback={selectCallback} />)}
+            {cards.map((cardId) => <McpListItem key={cardId} cardId={cardId} cardType={cardType} selectCallback={selectCallback} addRemoveCallback={addRemoveCallback} selectedItemsHash={selectedItemsHash} />)}
         </List>
     );
 };

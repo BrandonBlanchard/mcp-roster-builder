@@ -76,18 +76,18 @@ export const ModalCardContent: React.FC<ModalCardContentProps> = ({ cardId, card
         nextSrc:cardImages[(modalImageIndex + 1) % cardImages.length].imageUrl,
         prevSrc:cardImages[(modalImageIndex + cardImages.length - 1) % cardImages.length].imageUrl,
         onMovePrevRequest: () => setModalImageIndex((modalImageIndex + cardImages.length - 1) % cardImages.length),
-        onMoveNextRequest: () => setModalImageIndex((modalImageIndex + 1) % cardImages.length)    
+        onMoveNextRequest: () => setModalImageIndex((modalImageIndex + 1) % cardImages.length)
     } : {};
 
     return (
         <Lightbox
+            reactModalStyle={{zIndex: 9999}}
             { ...lightBoxPropsPart }
-            mainSrc={cardImages[modalImageIndex].imageUrl}
+            mainSrc={cardImages[modalImageIndex].imageUrl}  
             onCloseRequest={() => {
                 onClose();
                 setModalImageIndex(0);
             }}
-            
         />
     )
 }

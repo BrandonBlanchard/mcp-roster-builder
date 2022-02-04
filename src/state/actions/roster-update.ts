@@ -1,9 +1,7 @@
 import { ApplicationState, Roster } from "../models";
 
-export interface UpdateRosterActionArgs {
+export interface UpdateRosterActionArgs extends Partial<Roster> {
     rosterId: string;
-    name: string | null;
-    charactersIds: string[] | null;
 };
 
 export interface UpdateRosterAction {
@@ -22,7 +20,7 @@ interface RosterListParts {
     after: Roster[];
 }
 
-export const updateRosterReducer = (state: ApplicationState, { rosterId, charactersIds, name }: UpdateRosterActionArgs): ApplicationState => {
+export const updateRosterReducer = (state: ApplicationState, { rosterId, tacticsIds, charactersIds, name }: UpdateRosterActionArgs): ApplicationState => {
     const { roster, before, after }: RosterListParts  = state.rosterList.reduce((agg: RosterListParts, rosterItem: Roster) => {
         if (agg.roster !== null) {
             agg.after.push(rosterItem);
@@ -46,8 +44,9 @@ export const updateRosterReducer = (state: ApplicationState, { rosterId, charact
 
     const nextRoster: Roster = {
         ...roster,
-        charactersIds: charactersIds !== null ? charactersIds : roster.charactersIds,
-        name: name !== null ? name : roster.name
+        name: name ?? roster.name,
+        tacticsIds: tacticsIds ?? roster.tacticsIds,
+        charactersIds: charactersIds ?? roster.charactersIds
     };
 
     const nextRosterList = [...before, nextRoster, ...after];

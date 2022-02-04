@@ -1,4 +1,5 @@
 import { setArrayRecord } from "../../local-storage-service";
+import { UNAFFILIATED } from "../../service-models/card-models";
 import { ApplicationState, Roster } from "../models";
 
 export interface CreateRosterActionArgs {
@@ -22,7 +23,8 @@ export const createRosterReducer = (state: ApplicationState, { name }: CreateRos
         id: rosterId,
         name,
         charactersIds: [],
-        affiliation: 'unaffiliated'
+        tacticsIds: [],
+        affiliation: UNAFFILIATED
     };
     
     const unsortedRosterList = [ newRoster, ...state.rosterList];
