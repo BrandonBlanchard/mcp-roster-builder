@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/mcp-roster-builder/static/css/main.f98eea66.css",
-    "main.js": "/mcp-roster-builder/static/js/main.398ee6cf.js",
+    "main.js": "/mcp-roster-builder/static/js/main.de0a7037.js",
     "static/js/377.bfb2ec0c.chunk.js": "/mcp-roster-builder/static/js/377.bfb2ec0c.chunk.js",
     "service-worker.js": "/mcp-roster-builder/service-worker.js",
     "static/media/microns.svg": "/mcp-roster-builder/static/media/microns.340d619bf8c58b981043.svg",
@@ -11,11 +11,11 @@
     "static/media/microns.woff2": "/mcp-roster-builder/static/media/microns.fe9abf2aa0c969cd33fb.woff2",
     "index.html": "/mcp-roster-builder/index.html",
     "main.f98eea66.css.map": "/mcp-roster-builder/static/css/main.f98eea66.css.map",
-    "main.398ee6cf.js.map": "/mcp-roster-builder/static/js/main.398ee6cf.js.map",
+    "main.de0a7037.js.map": "/mcp-roster-builder/static/js/main.de0a7037.js.map",
     "377.bfb2ec0c.chunk.js.map": "/mcp-roster-builder/static/js/377.bfb2ec0c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f98eea66.css",
-    "static/js/main.398ee6cf.js"
+    "static/js/main.de0a7037.js"
   ]
 }
