@@ -10,7 +10,7 @@ export interface McpListItemProps {
     cardId: string;
     cardType: McpDataType;
     selectCallback(id: string): void;
-    addRemoveCallback?: (id: string, cardType: McpDataType) =>  void;
+    addRemoveCallback?: (id: string, cardType: McpDataType) => void;
     selectedItemsHash?: Record<string, {}>;
 }
 
@@ -25,7 +25,7 @@ export const McpListItem: React.FC<McpListItemProps> = ({
 
     const useAddRemove = addRemoveCallback !== null;
     const isOnAddRemoveList = useMemo(() => {
-        if(useAddRemove === false) { return false; }
+        if (useAddRemove === false) { return false; }
 
         const result = selectedItemsHash[cardId] ?? null;
 
@@ -42,15 +42,14 @@ export const McpListItem: React.FC<McpListItemProps> = ({
                 {cardType === McpDataType.tactic && (<McpListItemTacticContent card={card as TeamTacticsCard} />)}
                 {cardType === McpDataType.infinityGem && (<McpListItemGemContent card={card as InfinityGem} />)}
                 {cardType === McpDataType.affiliation && (<McpListItemAffiliationContent card={card as Affiliation} />)}
-            </ListItemButton>
-            {useAddRemove && (
-                <ListItemButton style={{ width: '40px', justifyContent: 'flex-end' }} >
+                {useAddRemove && (
+
                     <IconButton onClick={() => addRemoveCallback(card.id, cardType)}>
-                        {isOnAddRemoveList === false && <AddCircleIcon /> }
-                        {isOnAddRemoveList && <RemoveCircleIcon /> }
+                        {isOnAddRemoveList === false && <AddCircleIcon />}
+                        {isOnAddRemoveList && <RemoveCircleIcon />}
                     </IconButton>
-                </ListItemButton>
-            )}
+                )}
+            </ListItemButton>
         </ListItem>
     );
 }

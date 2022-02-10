@@ -15,12 +15,13 @@ export enum Status {
   failed
 }
 
-export interface Roster {
+export interface Roster extends Record<string, any> {
   id: string;
   name: string;
   affiliation: string;
   charactersIds: string[];
   tacticsIds: string[];
+  crisisIds: string[];
 }
 
 export interface RosterState {

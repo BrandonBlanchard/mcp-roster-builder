@@ -81,7 +81,8 @@ export const defaultRoster: Roster = {
     name: '',
     affiliation: '',
     tacticsIds: [],
-    charactersIds: []
+    charactersIds: [],
+    crisisIds: [],
 }
 
 const getDefaultForMcpDataType = (dataType: McpDataType): McpData => {

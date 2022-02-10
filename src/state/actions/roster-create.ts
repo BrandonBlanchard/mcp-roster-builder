@@ -24,6 +24,7 @@ export const createRosterReducer = (state: ApplicationState, { name }: CreateRos
         name,
         charactersIds: [],
         tacticsIds: [],
+        crisisIds: [],
         affiliation: UNAFFILIATED
     };
     

@@ -20,7 +20,7 @@ interface RosterListParts {
     after: Roster[];
 }
 
-export const updateRosterReducer = (state: ApplicationState, { rosterId, tacticsIds, charactersIds, name }: UpdateRosterActionArgs): ApplicationState => {
+export const updateRosterReducer = (state: ApplicationState, { rosterId, tacticsIds, charactersIds, crisisIds, name }: UpdateRosterActionArgs): ApplicationState => {
     const { roster, before, after }: RosterListParts  = state.rosterList.reduce((agg: RosterListParts, rosterItem: Roster) => {
         if (agg.roster !== null) {
             agg.after.push(rosterItem);
@@ -46,7 +46,8 @@ export const updateRosterReducer = (state: ApplicationState, { rosterId, tactics
         ...roster,
         name: name ?? roster.name,
         tacticsIds: tacticsIds ?? roster.tacticsIds,
-        charactersIds: charactersIds ?? roster.charactersIds
+        charactersIds: charactersIds ?? roster.charactersIds,
+        crisisIds: crisisIds ?? roster.crisisIds
     };
 
     const nextRosterList = [...before, nextRoster, ...after];
