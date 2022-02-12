@@ -1,7 +1,7 @@
 import { Affiliation, CharacterCard, CrisisCard, InfinityGem, McpData, McpDataType, TeamTacticsCard } from "../service-models/card-models";
 import { ApplicationState, Roster, Status } from "../state/models";
 
-const defaultCrisis: CrisisCard = {
+export const defaultCrisis: CrisisCard = {
     id: '',
     crisis: '',
     threatLevel: '',
@@ -12,7 +12,7 @@ const defaultCrisis: CrisisCard = {
     searchString: ''
 };
 
-const defaultCharacter: CharacterCard = {
+export const defaultCharacter: CharacterCard = {
     id: '',
     name: '',
     alias: '',
@@ -27,7 +27,7 @@ const defaultCharacter: CharacterCard = {
     leader: ''
 };
 
-const defaultAffiliation: Affiliation = {
+export const defaultAffiliation: Affiliation = {
     id: '',
     name: '',
     characterIds: [],
@@ -36,7 +36,7 @@ const defaultAffiliation: Affiliation = {
     searchString: ''
 };
 
-const defaultGem: InfinityGem = {
+export const defaultGem: InfinityGem = {
     id: '',
     name: '',
     color: '',
@@ -44,7 +44,7 @@ const defaultGem: InfinityGem = {
     searchString: ''
 };
 
-const defaultTactic: TeamTacticsCard = {
+export const defaultTactic: TeamTacticsCard = {
     id: '',
     tactic: '',
     affiliations: [],

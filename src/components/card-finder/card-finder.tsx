@@ -1,11 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import { CardTypeKey, cardTypeMeta, CardTypeMeta } from '../../data/card-type-meta';
-import { useMcpData } from '../../hooks/mcp-data-hook';
 import { Affiliation, McpDataType, UNAFFILIATED } from '../../service-models/card-models';
 import { useApplicationContext } from '../../state/application-context';
 import { Status } from '../../state/models';
-import { getCardForDataType } from '../../utils/card-data-v2-';
+import { defaultAffiliation, getCardForDataType } from '../../utils/card-data-v2-';
 import { CardSearchHeader } from '../card-search-header';
 import { McpList } from '../list';
 import { ModalCardContent } from '../modal-card-content';
@@ -39,15 +38,45 @@ export const CardFinder: React.FC<CardFinderProps> = ({
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
 
     // Affiliation filters for characters and team tactics
-    const [affiliationSelection, setAffiliationSelection] = useState<string>(UNAFFILIATED);
-    const selectedAffiliationData = useMcpData(affiliationSelection ?? '', McpDataType.affiliation) as Affiliation;
+    const [affiliationSelection, setAffiliationSelection] = useState<string[]>([UNAFFILIATED]);
+    const selectedAffiliationData = useMemo(() => {
+        const affiliationsData = affiliationSelection.map((selection) => getCardForDataType(state, selection, McpDataType.affiliation) as Affiliation);
+        const { charactersIds, tacticsIds, leaders } = affiliationsData.reduce((agg: { charactersIds: string[], tacticsIds: string[], leaders: string[] }, affiliation) => {
+            agg.charactersIds.push(...affiliation.characterIds)
+            agg.tacticsIds.push(...affiliation.teamTactics)
+            agg.leaders.push(...affiliation.leaders)
+
+            return agg;
+        }, { charactersIds: [], tacticsIds: [], leaders: [] });
+
+        const dedupe = (arr: string[]) => {
+            let set = new Set(arr);
+            let vals = set.values();
+            return Array.from(vals);
+        }
+
+        const dedupedChars = dedupe(charactersIds);
+        const dedupedTactics = dedupe(tacticsIds);
+        const dedupedLeaders = dedupe(leaders);
+
+        const mergedSelections: Affiliation = {
+            ...defaultAffiliation,
+            characterIds: dedupedChars,
+            teamTactics: dedupedTactics,
+            leaders: dedupedLeaders
+        };
+
+        return mergedSelections;
+    }, [affiliationSelection]);
+
     const showAffiliationFilter = cardTypeFilter.cardType === McpDataType.character || cardTypeFilter.cardType === McpDataType.tactic;
 
     const cards: string[] = state.cardLibraryStatus === Status.ready ? state[cardTypeFilter.dataKey] : [];
 
     const affiliationCards = cardTypeFilter.cardType === McpDataType.character ? selectedAffiliationData?.characterIds ?? null : selectedAffiliationData?.teamTactics ?? null;
     const withAffiliationFilter =
-        showAffiliationFilter && affiliationSelection !== UNAFFILIATED
+        // Since UNAFFILIATED is the value when there is no selection, it should always be the first item
+        showAffiliationFilter && affiliationSelection[0] !== UNAFFILIATED
             ? affiliationCards
             : cards;
 
@@ -55,7 +84,7 @@ export const CardFinder: React.FC<CardFinderProps> = ({
 
     const filteredCards = withAffiliationFilter.filter((cardId: string) => {
         const card = getCardForDataType(state, cardId, McpDataType.mcpData);
-        return card.searchString.indexOf(searchTermLower) > -1
+        return card.searchString.indexOf(searchTermLower) > -1;
     });
 
     const sortedFilteredCards = filteredCards.sort((cardIda, cardIdb) => {
@@ -67,6 +96,21 @@ export const CardFinder: React.FC<CardFinderProps> = ({
     useEffect(() => {
         setSelectedCard(null);
     }, [cardTypeFilter]);
+
+    const handleChange = (event: SelectChangeEvent<string>) => {
+        const {
+          target: { value },
+        } = event;
+        const safeValue = typeof value === 'string' ? value.split(',') : value;
+        // When selecting an affiliation remove unaffiliated,
+        // If UNAFFILIATED is the last item, last selected item, then clear all selections
+        const valueWithoutUnaffiliated = safeValue[safeValue.length - 1] === UNAFFILIATED ? [UNAFFILIATED] : safeValue.filter((val) => val !== UNAFFILIATED);
+        const newValue = safeValue.length > 0 ? valueWithoutUnaffiliated : [UNAFFILIATED];
+
+        setAffiliationSelection(newValue);
+        setSearchTerm('')
+      };
+
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', width: '100%', backgroundColor: 'white', height: '100vh' }}>
@@ -92,23 +136,21 @@ export const CardFinder: React.FC<CardFinderProps> = ({
                 </FormControl>
 
                 {showAffiliationFilter && (
-                    <FormControl style={{ marginTop: 10 }}>
+                    <FormControl style={{ marginTop: 10 }} >
                         <InputLabel id="affiliation">Affiliation</InputLabel>
                         <Select
+                            multiple
                             variant='standard'
-                            value={affiliationSelection}
-                            label="Card Type"
-                            onChange={(e) => {
-                                setAffiliationSelection(e.target.value)
-                                setSearchTerm('')
-                            }}
+                            value={affiliationSelection as any}
+                            label="Affiliation"
+                            onChange={handleChange}
+                            MenuProps={{ style: { maxHeight: '60%' } }}
                         >
                             <MenuItem value={UNAFFILIATED} key={UNAFFILIATED}>All Affiliations</MenuItem>
                             {state.affiliations.map((id) => {
                                 const affiliation = getCardForDataType(state, id, McpDataType.affiliation) as Affiliation;
                                 return <MenuItem value={id} key={id}>{affiliation.name}</MenuItem>
                             })}
-
                         </Select>
                     </FormControl>)}
             </CardSearchHeader>

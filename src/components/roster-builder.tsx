@@ -20,7 +20,6 @@ export const RosterBuilderApp: React.FC = () => {
 
     return (
         <div className='roster-builder'>
-          
             <div className='app-content'>
                 {page === Page.home && <HomePage />}
                 {page === Page.search && <SearchPage />}
