@@ -1,4 +1,4 @@
-import { CardData, McpData } from "../service-models/card-models";
+import { CardData, McpData } from '../service-models/card-models';
 
 export enum Page {
     home,
@@ -43,4 +43,4 @@ export interface ApplicationState {
   crisis: string[];
   tactics: string[];
   deploymentLetterToId: Record<string, string>
-};
+}

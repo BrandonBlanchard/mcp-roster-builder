@@ -1,6 +1,6 @@
-import { UpdateRosterAction, UpdateRosterActionArgs } from ".";
-import { McpDataType } from "../../service-models/card-models";
-import { ApplicationState } from "../models";
+import { UpdateRosterAction, UpdateRosterActionArgs } from '.';
+import { McpDataType } from '../../service-models/card-models';
+import { ApplicationState } from '../models';
 
 interface addRosterCardActionArgs {
     cardType: McpDataType;
@@ -12,39 +12,41 @@ interface addRosterCardActionArgs {
 }
 
 export const selectCardsAndKey = (cardType: McpDataType, charactersIds: string[], tacticsIds: string[], crisisIds: string[]): [string, string[]] => {
-    switch (cardType) {
-        case McpDataType.character:
-            return ['charactersIds', charactersIds];
-        case McpDataType.tactic:
-            return ['tacticsIds', tacticsIds];
-        case McpDataType.crisis:
-            return ['crisisIds', crisisIds];
-    }
+  switch (cardType) {
+    case McpDataType.character:
+      return ['charactersIds', charactersIds];
+    case McpDataType.tactic:
+      return ['tacticsIds', tacticsIds];
+    case McpDataType.crisis:
+      return ['crisisIds', crisisIds];
+  }
 
-    return ['', []];
-}
+  return ['', []];
+};
 
-export const addRosterCardActionCreator = ({ state, charactersIds = [], tacticsIds = [], crisisIds = [], rosterId, cardType }: addRosterCardActionArgs): UpdateRosterAction => {
-    const roster = state.rosterList.find((roster) => roster.id === rosterId) ?? null;
-    const [ cardKey, idsToAdd ] = selectCardsAndKey(cardType, charactersIds, tacticsIds, crisisIds);
-    
-    if (cardKey === '') {
-        // Empty action, will be discarded by the reducer
-        return { type: 'updateRosterAction', data: { rosterId: '' }}
-    }
+export const addRosterCardActionCreator = ({
+  state, charactersIds = [], tacticsIds = [], crisisIds = [], rosterId, cardType,
+}: addRosterCardActionArgs): UpdateRosterAction => {
+  const roster = state.rosterList.find((roster) => roster.id === rosterId) ?? null;
+  const [cardKey, idsToAdd] = selectCardsAndKey(cardType, charactersIds, tacticsIds, crisisIds);
 
-    const data: UpdateRosterActionArgs = {
-        rosterId,
-        [cardKey]: [...(roster?.[cardKey] ?? []), ...idsToAdd]
-    };
+  if (cardKey === '') {
+    // Empty action, will be discarded by the reducer
+    return { type: 'updateRosterAction', data: { rosterId: '' } };
+  }
 
-    console.log({
-        type: 'updateRosterAction',
-        data
-    });
+  const data: UpdateRosterActionArgs = {
+    rosterId,
+    [cardKey]: [...(roster?.[cardKey] ?? []), ...idsToAdd],
+  };
 
-    return {
-        type: 'updateRosterAction',
-        data
-    }
+  console.log({
+    type: 'updateRosterAction',
+    data,
+  });
+
+  return {
+    type: 'updateRosterAction',
+    data,
+  };
 };

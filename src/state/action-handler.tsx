@@ -1,11 +1,11 @@
-
-import { ApplicationAction, createRosterReducer, deleteRosterReducer, loadCardDataReducer, loadRosterReducer, saveRosterReducer, setCardLibStatusReducer, setPageReducer, setSelectedRosterReducer, updateRosterReducer } from "./actions";
-import { ApplicationState } from "./models";
-
+import {
+  ApplicationAction, createRosterReducer, deleteRosterReducer, loadCardDataReducer, loadRosterReducer, saveRosterReducer, setCardLibStatusReducer, setPageReducer, setSelectedRosterReducer, updateRosterReducer,
+} from './actions';
+import { ApplicationState } from './models';
 
 const actionHandler = (
   state: ApplicationState,
-  action: ApplicationAction
+  action: ApplicationAction,
 ): ApplicationState => {
   try {
     switch (action.type) {
@@ -27,25 +27,25 @@ const actionHandler = (
         return updateRosterReducer(state, action.data);
       case 'setSelectedRosterAction':
         return setSelectedRosterReducer(state, action.data);
+      default:
+        return state;
     }
   } catch (e) {
     // When a reducer throws an error, announce the issue and use the last good state to keep things rolling
     console.error('ActionHandler failed at action: ', action, ' with error: ', e);
     return state;
   }
-}
+};
 
 export const applicationContextHandler = (
   state: ApplicationState,
-  action: ApplicationAction | ApplicationAction[]
+  action: ApplicationAction | ApplicationAction[],
 ): ApplicationState => {
   if (Array.isArray(action)) {
     return action.reduce(
-      (aggregateState, currentAction) =>
-        actionHandler(aggregateState, currentAction),
-      state
+      (aggregateState, currentAction) => actionHandler(aggregateState, currentAction),
+      state,
     );
-  } else {
-    return actionHandler(state, action);
   }
+  return actionHandler(state, action);
 };

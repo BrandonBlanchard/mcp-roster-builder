@@ -7,7 +7,5 @@ export interface McpListItemCharacterContentProps {
 }
 
 export const McpListItemCharacterContent: React.FC<McpListItemCharacterContentProps> = ({ card }) => (
-    <>
-        <ListItemText primary={card.name} secondary={card.alias + ' (' + card.threatLevel + ')'} />
-    </>
+  <ListItemText primary={card.name} secondary={`${card.alias} (${card.threatLevel})`} />
 );

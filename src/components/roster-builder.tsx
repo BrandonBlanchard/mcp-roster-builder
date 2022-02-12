@@ -9,26 +9,26 @@ import { RosterBuilder } from './pages/roster-builder';
 import './roster-builder.css';
 
 export const RosterBuilderApp: React.FC = () => {
-    const [state, dispatch] = useApplicationContext();
-    const { page } = state;
+  const [state, dispatch] = useApplicationContext();
+  const { page } = state;
 
-    useEffect(() => {
-        if (state.cardLibrary === null || state.cardLibraryStatus === Status.failed) {
-            dispatch(loadCardDataActionCreator({ dispatch }));
-        }
-    }, [state.cardLibraryStatus]);
+  useEffect(() => {
+    if (state.cardLibrary === null || state.cardLibraryStatus === Status.failed) {
+      dispatch(loadCardDataActionCreator({ dispatch }));
+    }
+  }, [state.cardLibraryStatus]);
 
-    return (
-        <div className='roster-builder'>
-            <div className='app-content'>
-                {page === Page.home && <HomePage />}
-                {page === Page.search && <SearchPage />}
-                {page === Page.roster && <RosterPage />}
-                {page === Page.play && <PlayPage />}
-                {page === Page.rosterBuilder && <RosterBuilder/>}
-            </div>
-            <AppNav />
-            <div className='roster-builder__background' />
-        </div>
-    );
-}
+  return (
+    <div className="roster-builder">
+      <div className="app-content">
+        {page === Page.home && <HomePage />}
+        {page === Page.search && <SearchPage />}
+        {page === Page.roster && <RosterPage />}
+        {page === Page.play && <PlayPage />}
+        {page === Page.rosterBuilder && <RosterBuilder />}
+      </div>
+      <AppNav />
+      <div className="roster-builder__background" />
+    </div>
+  );
+};

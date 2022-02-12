@@ -1,11 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
+import AddIcon from '@mui/icons-material/Add';
+import { Fab, List, Modal } from '@mui/material';
 import { McpDataType } from '../../../service-models/card-models';
 import { useApplicationContext } from '../../../state/application-context';
 import { Page, Roster } from '../../../state/models';
 import { PageHead } from '../../page-head';
-import { Fab, List, Modal } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import { addRosterCardActionCreator, removeRosterCardActionCreator, saveRosterActionCreator, selectCardsAndKey, setPageActionCreator, setSelectedRosterActionCreator } from '../../../state/actions';
+import {
+  addRosterCardActionCreator, removeRosterCardActionCreator, saveRosterActionCreator, selectCardsAndKey, setPageActionCreator, setSelectedRosterActionCreator,
+} from '../../../state/actions';
 import { RosterBuilderSection } from './components';
 import { CardFinder } from '../../card-finder';
 
@@ -14,124 +18,128 @@ const MAX_TACTICS = 10;
 const MAX_CRISIS = 3;
 
 const idHashReducer = (agg: Record<string, {}>, id: string): Record<string, {}> => {
-    agg[id] = {};
-    return agg;
-}
+  agg[id] = {};
+  return agg;
+};
 
 const selectCardsKey = (cardType: McpDataType): string => {
-    switch (cardType) {
-        case McpDataType.character:
-            return 'charactersIds';
-        case McpDataType.tactic:
-            return 'tacticsIds';
-        case McpDataType.crisis:
-            return 'crisisIds';
-    }
-
-    return '';
-}
-
+  switch (cardType) {
+    case McpDataType.character:
+      return 'charactersIds';
+    case McpDataType.tactic:
+      return 'tacticsIds';
+    case McpDataType.crisis:
+      return 'crisisIds';
+    default:
+      return '';
+  }
+};
 
 export const RosterBuilder: React.FC = () => {
-    const [characterPickerOpen, setCharacterPickerOpen] = useState(false);
-    const [state, dispatch] = useApplicationContext();
+  const [characterPickerOpen, setCharacterPickerOpen] = useState(false);
+  const [state, dispatch] = useApplicationContext();
 
-    const currentRoster = useMemo<Roster | null>(() => state.rosterList.find((roster) => roster.id === state.rosterState.selectedRosterId) ?? null, [state.rosterState.selectedRosterId, state.rosterList]);
-    const selectedIds = useMemo(() => {
-        const selectedChars = currentRoster?.charactersIds.reduce(idHashReducer, {});
-        const selectedTactics = currentRoster?.tacticsIds.reduce(idHashReducer, {});
-        const selectedCrisis = currentRoster?.crisisIds.reduce(idHashReducer, {});
+  const currentRoster = useMemo<Roster | null>(() => state.rosterList.find((roster) => roster.id === state.rosterState.selectedRosterId) ?? null, [state.rosterState.selectedRosterId, state.rosterList]);
+  const selectedIds = useMemo(() => {
+    const selectedChars = currentRoster?.charactersIds.reduce(idHashReducer, {});
+    const selectedTactics = currentRoster?.tacticsIds.reduce(idHashReducer, {});
+    const selectedCrisis = currentRoster?.crisisIds.reduce(idHashReducer, {});
 
-        const out = {
-            ...selectedChars,
-            ...selectedTactics,
-            ...selectedCrisis
-        };
-        return out;
-    }, [currentRoster]);
+    const out = {
+      ...selectedChars,
+      ...selectedTactics,
+      ...selectedCrisis,
+    };
+    return out;
+  }, [currentRoster]);
 
-    const characterList = currentRoster?.charactersIds ?? [];
-    const tacticsList = currentRoster?.tacticsIds ?? [];
-    const crisisList = currentRoster?.crisisIds ?? [];
+  const characterList = currentRoster?.charactersIds ?? [];
+  const tacticsList = currentRoster?.tacticsIds ?? [];
+  const crisisList = currentRoster?.crisisIds ?? [];
 
-    const addRemoveIdFromList = useCallback((id: string, cardType: McpDataType) => {
-        if (currentRoster === null) { return }
+  const addRemoveIdFromList = useCallback((id: string, cardType: McpDataType) => {
+    if (currentRoster === null) { return; }
 
-        const [ cardKey, relevantIds ] = selectCardsAndKey(cardType, currentRoster.charactersIds, currentRoster.tacticsIds, currentRoster.crisisIds)
-        if (cardKey === '') { return }
-        
-        const isRemove = relevantIds.indexOf(id) >= 0;
-        
-        const actionProps = {
-            rosterId: currentRoster.id,
-            [cardKey]: [id],
-            cardType,
-            state
-        };
+    const [cardKey, relevantIds] = selectCardsAndKey(cardType, currentRoster.charactersIds, currentRoster.tacticsIds, currentRoster.crisisIds);
+    if (cardKey === '') { return; }
 
-        if (isRemove) {
-            dispatch(removeRosterCardActionCreator(actionProps));
-        } else {
-            dispatch(addRosterCardActionCreator(actionProps));
-        }
-    }, [selectedIds]);
+    const isRemove = relevantIds.indexOf(id) >= 0;
 
-    useEffect(() => () => dispatch(saveRosterActionCreator({})), []);
+    const actionProps = {
+      rosterId: currentRoster.id,
+      [cardKey]: [id],
+      cardType,
+      state,
+    };
 
-    return (
-        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', alignSelf: 'stretch' }}>
-            <PageHead title={currentRoster?.name ?? 'New Roster'} backCB={() => dispatch([setSelectedRosterActionCreator({ rosterId: null }), setPageActionCreator({ page: Page.roster })])} />
+    if (isRemove) {
+      dispatch(removeRosterCardActionCreator(actionProps));
+    } else {
+      dispatch(addRosterCardActionCreator(actionProps));
+    }
+  }, [selectedIds]);
 
-            <List
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-                style={{ maxHeight: '100%', overflow: 'scroll' }}
-            >
-                <RosterBuilderSection
-                    title='Characters'
-                    cardIds={characterList}
-                    selectedIds={selectedIds}
-                    cardType={McpDataType.character}
-                    maxCount={MAX_CHARACTERS}
-                    addRemoveIdFromList={addRemoveIdFromList}
-                />
+  useEffect(() => () => dispatch(saveRosterActionCreator({})), []);
 
-                <RosterBuilderSection
-                    title='Tactics'
-                    cardIds={tacticsList}
-                    selectedIds={selectedIds}
-                    cardType={McpDataType.tactic}
-                    maxCount={MAX_TACTICS}
-                    addRemoveIdFromList={addRemoveIdFromList}
-                />
-               
-                <RosterBuilderSection
-                    title='Crisis'
-                    cardIds={crisisList}
-                    selectedIds={selectedIds}
-                    cardType={McpDataType.crisis}
-                    maxCount={MAX_CRISIS}
-                    addRemoveIdFromList={addRemoveIdFromList}
-                />
-            </List>
+  return (
+    <div style={{
+      display: 'flex', flexDirection: 'column', width: '100%', alignSelf: 'stretch',
+    }}
+    >
+      <PageHead title={currentRoster?.name ?? 'New Roster'} backCB={() => dispatch([setSelectedRosterActionCreator({ rosterId: null }), setPageActionCreator({ page: Page.roster })])} />
 
+      <List
+        component="nav"
+        aria-labelledby="nested-list-subheader"
+        style={{ maxHeight: '100%', overflow: 'scroll' }}
+      >
+        <RosterBuilderSection
+          title="Characters"
+          cardIds={characterList}
+          selectedIds={selectedIds}
+          cardType={McpDataType.character}
+          maxCount={MAX_CHARACTERS}
+          addRemoveIdFromList={addRemoveIdFromList}
+        />
 
-            <div style={{ position: 'absolute', right: '20px', bottom: '150px' }} onClick={() => setCharacterPickerOpen(true)}>
-                <Fab color="primary" aria-label="add" >
-                    <AddIcon />
-                </Fab>
-            </div>
+        <RosterBuilderSection
+          title="Tactics"
+          cardIds={tacticsList}
+          selectedIds={selectedIds}
+          cardType={McpDataType.tactic}
+          maxCount={MAX_TACTICS}
+          addRemoveIdFromList={addRemoveIdFromList}
+        />
 
-            <Modal
-                open={characterPickerOpen}
-                onClose={() => null} hideBackdrop
-                children={
-                    <CardFinder
-                        selectedItemsHash={selectedIds}
-                        closeCB={() => setCharacterPickerOpen(false)}
-                        cardTypes={[McpDataType.character, McpDataType.tactic, McpDataType.crisis]}
-                        addRemoveCallback={addRemoveIdFromList}
-                    />} />
-        </div>
-    );
-}
+        <RosterBuilderSection
+          title="Crisis"
+          cardIds={crisisList}
+          selectedIds={selectedIds}
+          cardType={McpDataType.crisis}
+          maxCount={MAX_CRISIS}
+          addRemoveIdFromList={addRemoveIdFromList}
+        />
+      </List>
+
+      <div style={{ position: 'absolute', right: '20px', bottom: '150px' }} onClick={() => setCharacterPickerOpen(true)}>
+        <Fab color="primary" aria-label="add">
+          <AddIcon />
+        </Fab>
+      </div>
+
+      <Modal
+        open={characterPickerOpen}
+        onClose={() => null}
+        hideBackdrop
+        children={(
+          <CardFinder
+            selectedItemsHash={selectedIds}
+            closeCB={() => setCharacterPickerOpen(false)}
+            cardTypes={[McpDataType.character, McpDataType.tactic, McpDataType.crisis]}
+            addRemoveCallback={addRemoveIdFromList}
+          />
+                  )}
+      />
+    </div>
+  );
+};

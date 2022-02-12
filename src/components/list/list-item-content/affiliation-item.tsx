@@ -7,7 +7,5 @@ export interface McpListItemAffiliationContentProps {
 }
 
 export const McpListItemAffiliationContent: React.FC<McpListItemAffiliationContentProps> = ({ card }) => (
-    <>
-        <ListItemText primary={card.name} secondary={card.leaders.join(',')} />
-    </>
+  <ListItemText primary={card.name} secondary={card.leaders.join(',')} />
 );

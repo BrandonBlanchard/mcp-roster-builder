@@ -9,7 +9,7 @@ export const applicationContextDefault: ApplicationState = {
   cardLibraryStatus: Status.init,
   rosterList: [],
   rosterState: {
-    selectedRosterId: null
+    selectedRosterId: null,
   },
   mcpData: {},
   affiliations: [],
@@ -17,7 +17,7 @@ export const applicationContextDefault: ApplicationState = {
   characters: [],
   tactics: [],
   crisis: [],
-  deploymentLetterToId: {}
+  deploymentLetterToId: {},
 };
 
 // Create context add placeholder dispatch
@@ -33,7 +33,7 @@ interface ApplicationProviderArgs {
 export const ApplicationProvider: React.FC<ApplicationProviderArgs> = ({
   reducer = applicationContextHandler,
   children = null,
-  initialState = applicationContextDefault
+  initialState = applicationContextDefault,
 }) => {
   const context = useReducer(reducer, initialState);
 
@@ -41,7 +41,7 @@ export const ApplicationProvider: React.FC<ApplicationProviderArgs> = ({
     <ApplicationContext.Provider value={context}>
       {children}
     </ApplicationContext.Provider>
-  )
-}
+  );
+};
 
 export const useApplicationContext = () => useContext(ApplicationContext);

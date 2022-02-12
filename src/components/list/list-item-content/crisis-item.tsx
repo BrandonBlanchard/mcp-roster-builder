@@ -7,8 +7,8 @@ export interface McpListItemCrisisContentProps {
 }
 
 export const McpListItemCrisisContent: React.FC<McpListItemCrisisContentProps> = ({ card }) => (
-    <>
-        <ListItemText primary={card.crisis} secondary={`Deployment ${card.setup}`} />
-        <ListItemText style={{ textAlign: 'right' }} primary={card.threatLevel} />
-    </>
+  <>
+    <ListItemText primary={card.crisis} secondary={`Deployment ${card.setup}`} />
+    <ListItemText style={{ textAlign: 'right' }} primary={card.threatLevel} />
+  </>
 );

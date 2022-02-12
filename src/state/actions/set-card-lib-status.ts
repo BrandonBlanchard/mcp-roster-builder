@@ -1,26 +1,24 @@
-import { ApplicationState, Status } from "../models";
+import { ApplicationState, Status } from '../models';
 
 export interface SetCardLibStatusActionArgs {
    status: Status
-};
+}
 
 export interface SetCardLibStatusAction {
     type: 'setCardLibStatusAction';
     data: SetCardLibStatusActionArgs;
-};
+}
 
 export const setCardLibStatusActionCreator = (data: SetCardLibStatusActionArgs): SetCardLibStatusAction => ({
-    type: 'setCardLibStatusAction',
-    data
+  type: 'setCardLibStatusAction',
+  data,
 });
 
 export const setCardLibStatusReducer = (state: ApplicationState, { status }: SetCardLibStatusActionArgs): ApplicationState => {
+  const nextState = {
+    ...state,
+    cardLibraryStatus: status,
+  };
 
-
-    const nextState = {
-        ...state,
-        cardLibraryStatus:  status
-    };
-
-    return nextState;
+  return nextState;
 };

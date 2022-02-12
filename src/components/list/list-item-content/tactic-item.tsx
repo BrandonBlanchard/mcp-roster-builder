@@ -7,7 +7,5 @@ export interface McpListItemTacticContentProps {
 }
 
 export const McpListItemTacticContent: React.FC<McpListItemTacticContentProps> = ({ card }) => (
-    <>
-        <ListItemText primary={card.tactic} />
-    </>
+  <ListItemText primary={card.tactic} />
 );

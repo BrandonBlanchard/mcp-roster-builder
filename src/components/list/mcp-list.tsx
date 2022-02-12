@@ -11,10 +11,10 @@ interface McpListProps {
     selectedItemsHash?: Record<string, {}>;
 }
 
-export const McpList: React.FC<McpListProps> = ({ cards, cardType, selectCallback, addRemoveCallback, selectedItemsHash }) => {
-    return (
-        <List sx={{ bgcolor: 'background.paper', overflow: 'scroll', width: '100%' }}>
-            {cards.map((cardId) => <McpListItem key={cardId} cardId={cardId} cardType={cardType} selectCallback={selectCallback} addRemoveCallback={addRemoveCallback} selectedItemsHash={selectedItemsHash} />)}
-        </List>
-    );
-};
+export const McpList: React.FC<McpListProps> = ({
+  cards, cardType, selectCallback, addRemoveCallback, selectedItemsHash,
+}) => (
+  <List sx={{ bgcolor: 'background.paper', overflow: 'scroll', width: '100%' }}>
+    {cards.map((cardId) => <McpListItem key={cardId} cardId={cardId} cardType={cardType} selectCallback={selectCallback} addRemoveCallback={addRemoveCallback} selectedItemsHash={selectedItemsHash} />)}
+  </List>
+);

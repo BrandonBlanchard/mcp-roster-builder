@@ -7,8 +7,8 @@ export interface McpListItemGemContentProps {
 }
 
 export const McpListItemGemContent: React.FC<McpListItemGemContentProps> = ({ card }) => (
-    <>
-        <ListItemText primary={card.name} />
-        <ListItemText style={{ textAlign: 'right' }} primary={card.threatLevel} />
-    </>
+  <>
+    <ListItemText primary={card.name} />
+    <ListItemText style={{ textAlign: 'right' }} primary={card.threatLevel} />
+  </>
 );

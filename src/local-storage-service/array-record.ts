@@ -1,20 +1,19 @@
-export type ArrayRecordKey = 'roster' | 'roster-v1'
-
+export type ArrayRecordKey = 'roster' | 'roster-v1';
 
 export const getArrayRecord = <T>(key: ArrayRecordKey): T[] => {
-    const storedData = window.localStorage.getItem(key);
-    
-    if(storedData === null) {
-        return [];
-    }
+  const storedData = window.localStorage.getItem(key);
 
-    const decoded = JSON.parse(storedData);
+  if (storedData === null) {
+    return [];
+  }
 
-    return decoded as unknown as T[];
+  const decoded = JSON.parse(storedData);
+
+  return decoded as unknown as T[];
 };
 
 export const setArrayRecord = <T>(key: ArrayRecordKey, data: T[]) => {
-    const dataString = JSON.stringify(data);
-    
-    window.localStorage.setItem(key, dataString);
-}
+  const dataString = JSON.stringify(data);
+
+  window.localStorage.setItem(key, dataString);
+};
