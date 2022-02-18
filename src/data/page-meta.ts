@@ -1,7 +1,7 @@
 import { Page } from '../state/models';
 
 export interface PageMeta {
-    label: string;
+  label: string;
 }
 
 export const pageMeta: Record<Page, PageMeta> = {
@@ -20,5 +20,4 @@ export const pageMeta: Record<Page, PageMeta> = {
   [Page.rosterBuilder]: {
     label: 'Roster Builder',
   },
-
 };

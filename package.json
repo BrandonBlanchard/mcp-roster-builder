@@ -41,8 +41,8 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "lint": "npx eslint src/*/**",
-    "lint:fix": "npx eslint src/*/** --fix"
+    "lint": "npx eslint src/**/*.tsx --quiet",
+    "lint:fix": "npx eslint src/**/*.tsx --quiet --fix"
   },
   "browserslist": {
     "production": [
@@ -55,6 +55,68 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+        "overrides": [
+          {
+            "files": ["**/*.ts?(x)"],
+            "rules": {
+              
+            }
+          }
+        ],
+      "rules": {
+          "quotes": [
+              2,
+              "single",
+              {
+                  "avoidEscape": true
+              }
+            ],
+            "react/require-default-props": "off",
+            "react/jsx-props-no-spreading": "off",
+          "no-use-before-define": "off",
+          "@typescript-eslint/no-use-before-define": [
+              "error"
+          ],
+          "react/jsx-filename-extension": [
+              "warn",
+              {
+                  "extensions": [
+                      ".tsx"
+                  ]
+              }
+          ],
+          "react-hooks/rules-of-hooks": "error",
+          "react-hooks/exhaustive-deps": "warn",
+          "import/prefer-default-export": "off",
+          "import/extensions": [
+              "warn",
+              "ignorePackages",
+              {
+                  "ts": "never",
+                  "tsx": "never"
+              }
+          ],
+          "no-shadow": "off",
+          "no-unused-vars": "off",
+          "@typescript-eslint/no-unused-vars": "error",
+          "react/function-component-definition": [
+              1,
+              {
+                  "namedComponents": "arrow-function",
+                  "unnamedComponents": "arrow-function"
+              }
+          ],
+          "jsx-a11y/click-events-have-key-events": "off",
+          "jsx-a11y/no-static-element-interactions": "off",
+          "comma-dangle": "off"
+      }
+      
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.11.0",

@@ -1,20 +1,25 @@
 import { ApplicationState, Page } from '../models';
 
 export interface SetPageActionArgs {
-    page: Page;
+  page: Page;
 }
 
 export interface SetPageAction {
-    type: 'setPageAction';
-    data: SetPageActionArgs;
+  type: 'setPageAction';
+  data: SetPageActionArgs;
 }
 
-export const setPageActionCreator = (data: SetPageActionArgs): SetPageAction => ({
+export const setPageActionCreator = (
+  data: SetPageActionArgs,
+): SetPageAction => ({
   type: 'setPageAction',
   data,
 });
 
-export const setPageReducer = (state: ApplicationState, { page }: SetPageActionArgs): ApplicationState => {
+export const setPageReducer = (
+  state: ApplicationState,
+  { page }: SetPageActionArgs,
+): ApplicationState => {
   const nextState = {
     ...state,
     page,

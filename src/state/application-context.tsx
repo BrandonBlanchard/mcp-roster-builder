@@ -21,13 +21,22 @@ export const applicationContextDefault: ApplicationState = {
 };
 
 // Create context add placeholder dispatch
-export type ApplicationDispatch = React.Dispatch<ApplicationAction | ApplicationAction[]>;
-export const ApplicationContext = React.createContext<[ApplicationState, ApplicationDispatch]>([applicationContextDefault, (state) => state]);
+export type ApplicationDispatch = React.Dispatch<
+  ApplicationAction | ApplicationAction[]
+>;
+export const ApplicationContext = React.createContext<
+  [ApplicationState, ApplicationDispatch]
+>([applicationContextDefault, (state) => state]);
 
 interface ApplicationProviderArgs {
-  children: ReactElement,
-  reducer?: (state: ApplicationState, action: ApplicationAction | ApplicationAction[]) => ApplicationState,
-  initialState?: ApplicationState
+  children: ReactElement;
+  // eslint-disable-next-line react/require-default-props
+  reducer?: (
+    state: ApplicationState,
+    action: ApplicationAction | ApplicationAction[],
+  ) => ApplicationState;
+  // eslint-disable-next-line react/require-default-props
+  initialState?: ApplicationState;
 }
 
 export const ApplicationProvider: React.FC<ApplicationProviderArgs> = ({

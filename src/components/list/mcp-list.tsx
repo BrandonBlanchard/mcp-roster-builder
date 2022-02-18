@@ -4,17 +4,30 @@ import { McpListItem } from '.';
 import { McpDataType } from '../../service-models/card-models';
 
 interface McpListProps {
-    cards: string[];
-    cardType: McpDataType;
-    selectCallback(id: string): void;
-    addRemoveCallback?: (id:string, cardType: McpDataType) => void;
-    selectedItemsHash?: Record<string, {}>;
+  cards: string[];
+  cardType: McpDataType;
+  selectCallback(id: string): void;
+  addRemoveCallback?: (id: string, cardType: McpDataType) => void;
+  selectedItemsHash?: Record<string, unknown>;
 }
 
 export const McpList: React.FC<McpListProps> = ({
-  cards, cardType, selectCallback, addRemoveCallback, selectedItemsHash,
+  cards,
+  cardType,
+  selectCallback,
+  addRemoveCallback,
+  selectedItemsHash,
 }) => (
   <List sx={{ bgcolor: 'background.paper', overflow: 'scroll', width: '100%' }}>
-    {cards.map((cardId) => <McpListItem key={cardId} cardId={cardId} cardType={cardType} selectCallback={selectCallback} addRemoveCallback={addRemoveCallback} selectedItemsHash={selectedItemsHash} />)}
+    {cards.map((cardId) => (
+      <McpListItem
+        key={cardId}
+        cardId={cardId}
+        cardType={cardType}
+        selectCallback={selectCallback}
+        addRemoveCallback={addRemoveCallback}
+        selectedItemsHash={selectedItemsHash}
+      />
+    ))}
   </List>
 );

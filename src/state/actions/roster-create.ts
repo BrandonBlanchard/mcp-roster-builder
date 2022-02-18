@@ -1,25 +1,31 @@
-import { setArrayRecord } from '../../local-storage-service';
 import { UNAFFILIATED } from '../../service-models/card-models';
 import { ApplicationState, Roster } from '../models';
 
 export interface CreateRosterActionArgs {
-    name: string;
+  name: string;
 }
 
 export interface CreateRosterAction {
-    type: 'createRosterAction';
-    data: CreateRosterActionArgs;
+  type: 'createRosterAction';
+  data: CreateRosterActionArgs;
 }
 
-export const createRosterActionCreator = (data: CreateRosterActionArgs): CreateRosterAction => ({
+export const createRosterActionCreator = (
+  data: CreateRosterActionArgs,
+): CreateRosterAction => ({
   type: 'createRosterAction',
   data,
 });
 
-export const createRosterReducer = (state: ApplicationState, { name }: CreateRosterActionArgs): ApplicationState => {
-  const rosterId = `${name.toLocaleLowerCase().replaceAll(' ', '-')}-${Date.now()}`;
+export const createRosterReducer = (
+  state: ApplicationState,
+  { name }: CreateRosterActionArgs,
+): ApplicationState => {
+  const rosterId = `${name
+    .toLocaleLowerCase()
+    .replaceAll(' ', '-')}-${Date.now()}`;
 
-  const newRoster:Roster = {
+  const newRoster: Roster = {
     id: rosterId,
     name,
     charactersIds: [],

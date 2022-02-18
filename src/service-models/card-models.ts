@@ -37,7 +37,12 @@ export interface TeamTacticsCard {
 }
 
 export type Card = TeamTacticsCard | CrisisCard | CharacterCard;
-export type McpData = TeamTacticsCard | CrisisCard | CharacterCard | Affiliation | InfinityGem;
+export type McpData =
+  | TeamTacticsCard
+  | CrisisCard
+  | CharacterCard
+  | Affiliation
+  | InfinityGem;
 
 // Local model
 export enum McpDataType {
@@ -46,15 +51,15 @@ export enum McpDataType {
   character,
   infinityGem,
   tactic,
-  affiliation
+  affiliation,
 }
 
 export interface InfinityGem {
-    id: string;
-    name: string;
-    color: string;
-    threatLevel: number;
-    searchString: string;
+  id: string;
+  name: string;
+  color: string;
+  threatLevel: number;
+  searchString: string;
 }
 
 export interface Affiliation {

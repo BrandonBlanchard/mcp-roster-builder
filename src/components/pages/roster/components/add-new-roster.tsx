@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 
 import {
-  Button, Dialog, DialogContent, DialogTitle, TextField,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  TextField,
 } from '@mui/material';
 
 export interface AddNewRosterProps {
@@ -10,14 +14,20 @@ export interface AddNewRosterProps {
   addCallback: (name: string) => void;
 }
 
-export const AddNewRoster: React.FC<AddNewRosterProps> = ({ isOpen, onClose, addCallback }) => {
+export const AddNewRoster: React.FC<AddNewRosterProps> = ({
+  isOpen,
+  onClose,
+  addCallback,
+}) => {
   const [rosterName, setRosterName] = useState<string>('');
 
   const canSave = rosterName.length > 0;
 
   return (
     <Dialog open={isOpen} onClose={onClose}>
-      <DialogTitle title="Add New Roster" color="primary">Create new Roster</DialogTitle>
+      <DialogTitle title="Add New Roster" color="primary">
+        Create new Roster
+      </DialogTitle>
       <DialogContent>
         <TextField
           label="Roster Name"
@@ -27,7 +37,13 @@ export const AddNewRoster: React.FC<AddNewRosterProps> = ({ isOpen, onClose, add
           size="small"
           onChange={(e) => setRosterName(e.target.value)}
         />
-        <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '20px' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            marginTop: '20px',
+          }}
+        >
           <Button onClick={onClose}> Cancel </Button>
           <Button
             variant="contained"
@@ -38,7 +54,9 @@ export const AddNewRoster: React.FC<AddNewRosterProps> = ({ isOpen, onClose, add
                 onClose();
               }
             }}
-          >Add</Button>
+          >
+            Add
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

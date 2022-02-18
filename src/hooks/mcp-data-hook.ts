@@ -1,4 +1,3 @@
-import React from 'react';
 import { McpData, McpDataType } from '../service-models/card-models';
 import { useApplicationContext } from '../state/application-context';
 import { getCardForDataType } from '../utils/card-data-v2-';

@@ -1,43 +1,56 @@
 import { ApplicationState, Roster } from '../models';
 
 export interface UpdateRosterActionArgs extends Partial<Roster> {
-    rosterId: string;
+  rosterId: string;
 }
 
 export interface UpdateRosterAction {
-    type: 'updateRosterAction';
-    data: UpdateRosterActionArgs;
+  type: 'updateRosterAction';
+  data: UpdateRosterActionArgs;
 }
 
-export const updateRosterActionCreator = (data: UpdateRosterActionArgs): UpdateRosterAction => ({
+export const updateRosterActionCreator = (
+  data: UpdateRosterActionArgs,
+): UpdateRosterAction => ({
   type: 'updateRosterAction',
   data,
 });
 
 interface RosterListParts {
-    roster: Roster | null;
-    before: Roster[];
-    after: Roster[];
+  roster: Roster | null;
+  before: Roster[];
+  after: Roster[];
 }
 
-export const updateRosterReducer = (state: ApplicationState, {
-  rosterId, tacticsIds, charactersIds, crisisIds, name,
-}: UpdateRosterActionArgs): ApplicationState => {
-  const { roster, before, after }: RosterListParts = state.rosterList.reduce((agg: RosterListParts, rosterItem: Roster) => {
-    if (agg.roster !== null) {
-      agg.after.push(rosterItem);
-    }
+export const updateRosterReducer = (
+  state: ApplicationState,
+  {
+    rosterId,
+    tacticsIds,
+    charactersIds,
+    crisisIds,
+    name,
+  }: UpdateRosterActionArgs,
+): ApplicationState => {
+  const { roster, before, after }: RosterListParts = state.rosterList.reduce(
+    (agg: RosterListParts, rosterItem: Roster) => {
+      if (agg.roster !== null) {
+        agg.after.push(rosterItem);
+      }
 
-    if (rosterItem.id === rosterId) {
-      agg.roster = rosterItem;
-    }
+      if (rosterItem.id === rosterId) {
+        // eslint-disable-next-line no-param-reassign
+        agg.roster = rosterItem;
+      }
 
-    if (agg.roster === null) {
-      agg.before.push(rosterItem);
-    }
+      if (agg.roster === null) {
+        agg.before.push(rosterItem);
+      }
 
-    return agg;
-  }, { roster: null, before: [], after: [] } as RosterListParts);
+      return agg;
+    },
+    { roster: null, before: [], after: [] } as RosterListParts,
+  );
 
   if (roster === null) {
     return state;

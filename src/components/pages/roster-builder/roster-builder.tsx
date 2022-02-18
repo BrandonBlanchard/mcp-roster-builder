@@ -1,47 +1,51 @@
-import React, {
-  useCallback, useEffect, useMemo, useState,
-} from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { Fab, List, Modal } from '@mui/material';
+import React, {
+  useCallback, useEffect, useMemo, useState
+} from 'react';
 import { McpDataType } from '../../../service-models/card-models';
+import {
+  addRosterCardActionCreator,
+  removeRosterCardActionCreator,
+  saveRosterActionCreator,
+  selectCardsAndKey,
+  setPageActionCreator,
+  setSelectedRosterActionCreator
+} from '../../../state/actions';
 import { useApplicationContext } from '../../../state/application-context';
 import { Page, Roster } from '../../../state/models';
-import { PageHead } from '../../page-head';
-import {
-  addRosterCardActionCreator, removeRosterCardActionCreator, saveRosterActionCreator, selectCardsAndKey, setPageActionCreator, setSelectedRosterActionCreator,
-} from '../../../state/actions';
-import { RosterBuilderSection } from './components';
 import { CardFinder } from '../../card-finder';
+import { PageHead } from '../../page-head';
+import { RosterBuilderSection } from './components';
 
 const MAX_CHARACTERS = 10;
 const MAX_TACTICS = 10;
 const MAX_CRISIS = 3;
 
-const idHashReducer = (agg: Record<string, {}>, id: string): Record<string, {}> => {
+const idHashReducer = (
+  agg: Record<string, any>,
+  id: string
+): Record<string, any> => {
+  // eslint-disable-next-line no-param-reassign
   agg[id] = {};
   return agg;
-};
-
-const selectCardsKey = (cardType: McpDataType): string => {
-  switch (cardType) {
-    case McpDataType.character:
-      return 'charactersIds';
-    case McpDataType.tactic:
-      return 'tacticsIds';
-    case McpDataType.crisis:
-      return 'crisisIds';
-    default:
-      return '';
-  }
 };
 
 export const RosterBuilder: React.FC = () => {
   const [characterPickerOpen, setCharacterPickerOpen] = useState(false);
   const [state, dispatch] = useApplicationContext();
 
-  const currentRoster = useMemo<Roster | null>(() => state.rosterList.find((roster) => roster.id === state.rosterState.selectedRosterId) ?? null, [state.rosterState.selectedRosterId, state.rosterList]);
+  const currentRoster = useMemo<Roster | null>(
+    () => state.rosterList.find(
+      (roster) => roster.id === state.rosterState.selectedRosterId
+    ) ?? null,
+    [state.rosterState.selectedRosterId, state.rosterList]
+  );
   const selectedIds = useMemo(() => {
-    const selectedChars = currentRoster?.charactersIds.reduce(idHashReducer, {});
+    const selectedChars = currentRoster?.charactersIds.reduce(
+      idHashReducer,
+      {}
+    );
     const selectedTactics = currentRoster?.tacticsIds.reduce(idHashReducer, {});
     const selectedCrisis = currentRoster?.crisisIds.reduce(idHashReducer, {});
 
@@ -57,36 +61,58 @@ export const RosterBuilder: React.FC = () => {
   const tacticsList = currentRoster?.tacticsIds ?? [];
   const crisisList = currentRoster?.crisisIds ?? [];
 
-  const addRemoveIdFromList = useCallback((id: string, cardType: McpDataType) => {
-    if (currentRoster === null) { return; }
+  const addRemoveIdFromList = useCallback(
+    (id: string, cardType: McpDataType) => {
+      if (currentRoster === null) {
+        return;
+      }
 
-    const [cardKey, relevantIds] = selectCardsAndKey(cardType, currentRoster.charactersIds, currentRoster.tacticsIds, currentRoster.crisisIds);
-    if (cardKey === '') { return; }
+      const [cardKey, relevantIds] = selectCardsAndKey(
+        cardType,
+        currentRoster.charactersIds,
+        currentRoster.tacticsIds,
+        currentRoster.crisisIds
+      );
+      if (cardKey === '') {
+        return;
+      }
 
-    const isRemove = relevantIds.indexOf(id) >= 0;
+      const isRemove = relevantIds.indexOf(id) >= 0;
 
-    const actionProps = {
-      rosterId: currentRoster.id,
-      [cardKey]: [id],
-      cardType,
-      state,
-    };
+      const actionProps = {
+        rosterId: currentRoster.id,
+        [cardKey]: [id],
+        cardType,
+        state,
+      };
 
-    if (isRemove) {
-      dispatch(removeRosterCardActionCreator(actionProps));
-    } else {
-      dispatch(addRosterCardActionCreator(actionProps));
-    }
-  }, [selectedIds]);
+      if (isRemove) {
+        dispatch(removeRosterCardActionCreator(actionProps));
+      } else {
+        dispatch(addRosterCardActionCreator(actionProps));
+      }
+    },
+    [selectedIds]
+  );
 
-  useEffect(() => () => dispatch(saveRosterActionCreator({})), []);
+  useEffect(() => () => dispatch(saveRosterActionCreator()), []);
 
   return (
-    <div style={{
-      display: 'flex', flexDirection: 'column', width: '100%', alignSelf: 'stretch',
-    }}
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        alignSelf: 'stretch',
+      }}
     >
-      <PageHead title={currentRoster?.name ?? 'New Roster'} backCB={() => dispatch([setSelectedRosterActionCreator({ rosterId: null }), setPageActionCreator({ page: Page.roster })])} />
+      <PageHead
+        title={currentRoster?.name ?? 'New Roster'}
+        backCB={() => dispatch([
+          setSelectedRosterActionCreator({ rosterId: null }),
+          setPageActionCreator({ page: Page.roster }),
+        ])}
+      />
 
       <List
         component="nav"
@@ -121,7 +147,10 @@ export const RosterBuilder: React.FC = () => {
         />
       </List>
 
-      <div style={{ position: 'absolute', right: '20px', bottom: '150px' }} onClick={() => setCharacterPickerOpen(true)}>
+      <div
+        style={{ position: 'absolute', right: '20px', bottom: '150px' }}
+        onClick={() => setCharacterPickerOpen(true)}
+      >
         <Fab color="primary" aria-label="add">
           <AddIcon />
         </Fab>
@@ -131,14 +160,19 @@ export const RosterBuilder: React.FC = () => {
         open={characterPickerOpen}
         onClose={() => null}
         hideBackdrop
+        // eslint-disable-next-line react/no-children-prop
         children={(
           <CardFinder
             selectedItemsHash={selectedIds}
             closeCB={() => setCharacterPickerOpen(false)}
-            cardTypes={[McpDataType.character, McpDataType.tactic, McpDataType.crisis]}
+            cardTypes={[
+              McpDataType.character,
+              McpDataType.tactic,
+              McpDataType.crisis,
+            ]}
             addRemoveCallback={addRemoveIdFromList}
           />
-                  )}
+        )}
       />
     </div>
   );

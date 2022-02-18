@@ -1,18 +1,18 @@
 import { CardData, McpData } from '../service-models/card-models';
 
 export enum Page {
-    home,
-    search,
-    play,
-    roster,
-    rosterBuilder
+  home,
+  search,
+  play,
+  roster,
+  rosterBuilder,
 }
 
 export enum Status {
   init,
   loading,
   ready,
-  failed
+  failed,
 }
 
 export interface Roster extends Record<string, any> {
@@ -42,5 +42,5 @@ export interface ApplicationState {
   characters: string[];
   crisis: string[];
   tactics: string[];
-  deploymentLetterToId: Record<string, string>
+  deploymentLetterToId: Record<string, string>;
 }

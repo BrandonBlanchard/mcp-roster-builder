@@ -1,5 +1,11 @@
 import {
-  Affiliation, CharacterCard, CrisisCard, InfinityGem, McpData, McpDataType, TeamTacticsCard,
+  Affiliation,
+  CharacterCard,
+  CrisisCard,
+  InfinityGem,
+  McpData,
+  McpDataType,
+  TeamTacticsCard
 } from '../service-models/card-models';
 import { ApplicationState, Roster, Status } from '../state/models';
 
@@ -99,15 +105,15 @@ const getDefaultForMcpDataType = (dataType: McpDataType): McpData => {
       return defaultGem;
     case McpDataType.tactic:
       return defaultTactic;
+    default:
+      return defaultMcpData;
   }
-
-  return defaultMcpData;
 };
 
 export const getCardForDataType = (
   applicationState: ApplicationState,
   id: string,
-  dataType: McpDataType,
+  dataType: McpDataType
 ): McpData => {
   if (applicationState.cardLibraryStatus !== Status.ready) {
     return getDefaultForMcpDataType(dataType);
@@ -154,6 +160,7 @@ export const getCardForDataType = (
       } as TeamTacticsCard;
 
     case McpDataType.mcpData:
+    default:
       return {
         ...defaultMcpData,
         ...data,

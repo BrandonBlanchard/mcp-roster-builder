@@ -1,22 +1,28 @@
-import { setArrayRecord } from '../../local-storage-service';
-import { ApplicationState, Roster } from '../models';
+import { ApplicationState } from '../models';
 
 export interface DeleteRosterActionArgs {
-    rosterId: string;
+  rosterId: string;
 }
 
 export interface DeleteRosterAction {
-    type: 'deleteRosterAction';
-    data: DeleteRosterActionArgs;
+  type: 'deleteRosterAction';
+  data: DeleteRosterActionArgs;
 }
 
-export const deleteRosterActionCreator = (data: DeleteRosterActionArgs): DeleteRosterAction => ({
+export const deleteRosterActionCreator = (
+  data: DeleteRosterActionArgs,
+): DeleteRosterAction => ({
   type: 'deleteRosterAction',
   data,
 });
 
-export const deleteRosterReducer = (state: ApplicationState, { rosterId }: DeleteRosterActionArgs): ApplicationState => {
-  const unsortedRosterList = state.rosterList.filter((roster) => roster.id !== rosterId);
+export const deleteRosterReducer = (
+  state: ApplicationState,
+  { rosterId }: DeleteRosterActionArgs,
+): ApplicationState => {
+  const unsortedRosterList = state.rosterList.filter(
+    roster => roster.id !== rosterId,
+  );
   const nextRosterList = unsortedRosterList.sort((a, b) => {
     if (a.name < b.name) {
       return -1;

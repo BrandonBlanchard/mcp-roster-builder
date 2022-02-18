@@ -13,7 +13,10 @@ export const RosterBuilderApp: React.FC = () => {
   const { page } = state;
 
   useEffect(() => {
-    if (state.cardLibrary === null || state.cardLibraryStatus === Status.failed) {
+    if (
+      state.cardLibrary === null
+      || state.cardLibraryStatus === Status.failed
+    ) {
       dispatch(loadCardDataActionCreator({ dispatch }));
     }
   }, [state.cardLibraryStatus]);

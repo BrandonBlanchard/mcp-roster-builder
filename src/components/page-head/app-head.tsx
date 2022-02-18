@@ -1,9 +1,9 @@
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import {
+  Container, Divider, IconButton, Typography
+} from '@mui/material';
 import React from 'react';
 import './app-head.css';
-import {
-  Container, Divider, IconButton, Toolbar, Typography,
-} from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 export interface PageHeadProps {
   title: string;
@@ -12,16 +12,17 @@ export interface PageHeadProps {
 
 export const PageHead: React.FC<PageHeadProps> = ({ title, backCB = null }) => (
   <>
-    <Container style={{
-      textAlign: 'left',
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      flexWrap: 'wrap',
-      height: '60px',
-      minHeight: '60px',
-      alignItems: 'center',
-    }}
+    <Container
+      style={{
+        textAlign: 'left',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        height: '60px',
+        minHeight: '60px',
+        alignItems: 'center',
+      }}
     >
       <div style={{ width: '50px' }}>
         {backCB && (
@@ -34,9 +35,7 @@ export const PageHead: React.FC<PageHeadProps> = ({ title, backCB = null }) => (
         {title}
       </Typography>
       <div style={{ width: '50px' }} />
-
     </Container>
     <Divider style={{ width: '100%', marginBottom: '20px' }} />
   </>
-
 );

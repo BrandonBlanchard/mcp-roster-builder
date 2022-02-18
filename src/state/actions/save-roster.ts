@@ -1,19 +1,17 @@
 import { setArrayRecord } from '../../local-storage-service';
 import { ApplicationState, Roster } from '../models';
 
-export interface SaveRosterActionArgs {}
-
 export interface SaveRosterAction {
-    type: 'saveRosterAction';
-    data: SaveRosterActionArgs;
+  type: 'saveRosterAction';
 }
 
-export const saveRosterActionCreator = (data: SaveRosterActionArgs): SaveRosterAction => ({
+export const saveRosterActionCreator = (): SaveRosterAction => ({
   type: 'saveRosterAction',
-  data,
 });
 
-export const saveRosterReducer = (state: ApplicationState, { }: SaveRosterActionArgs): ApplicationState => {
+export const saveRosterReducer = (
+  state: ApplicationState,
+): ApplicationState => {
   setArrayRecord<Roster>('roster', state.rosterList);
 
   return state;

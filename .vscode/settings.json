@@ -9,10 +9,14 @@
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+        "source.fixAll": true,
+        "source.organizeImports": true
     },
     "files.autoSave": "onFocusChange",
     "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }

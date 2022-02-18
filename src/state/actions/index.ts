@@ -21,13 +21,13 @@ export * from './roster-add-card';
 export * from './roster-remove-card';
 
 export type ApplicationAction =
-    SetPageAction |
-    LoadCardDataAction |
-    SetCardLibStatusAction |
-    LoadRosterAction |
-    LoadRosterAction |
-    SaveRosterAction |
-    CreateRosterAction |
-    DeleteRosterAction |
-    UpdateRosterAction |
-    SetSelectedRosterAction;
+  | SetPageAction
+  | LoadCardDataAction
+  | SetCardLibStatusAction
+  | LoadRosterAction
+  | LoadRosterAction
+  | SaveRosterAction
+  | CreateRosterAction
+  | DeleteRosterAction
+  | UpdateRosterAction
+  | SetSelectedRosterAction;

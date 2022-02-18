@@ -3,9 +3,9 @@ import { McpDataType } from '../service-models/card-models';
 export type CardTypeKey = 'characters' | 'crisis' | 'tactics' | 'gems';
 
 export interface CardTypeMeta {
-    label: string;
-    dataKey: CardTypeKey;
-    cardType: McpDataType
+  label: string;
+  dataKey: CardTypeKey;
+  cardType: McpDataType;
 }
 
 export const cardTypeMeta: Record<CardTypeKey, CardTypeMeta> = {

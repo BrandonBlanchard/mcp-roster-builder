@@ -1,10 +1,18 @@
 import {
-  FormControl, InputLabel, MenuItem, Select,
+  FormControl, InputLabel, MenuItem, Select
 } from '@mui/material';
-import React, { useEffect, useMemo, useState } from 'react';
-import { CardTypeKey, cardTypeMeta, CardTypeMeta } from '../../data/card-type-meta';
+import React, { useEffect, useState } from 'react';
+import {
+  CardTypeKey,
+  cardTypeMeta,
+  CardTypeMeta
+} from '../../data/card-type-meta';
 import { useMcpData } from '../../hooks/mcp-data-hook';
-import { Affiliation, McpDataType, UNAFFILIATED } from '../../service-models/card-models';
+import {
+  Affiliation,
+  McpDataType,
+  UNAFFILIATED
+} from '../../service-models/card-models';
 import { useApplicationContext } from '../../state/application-context';
 import { Status } from '../../state/models';
 import { getCardForDataType } from '../../utils/card-data-v2-';
@@ -16,17 +24,27 @@ import { PageHead } from '../page-head';
 export const SearchPage: React.FC = () => {
   const [state] = useApplicationContext();
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [cardTypeFilter, setCardTypeFilter] = useState<CardTypeMeta>(cardTypeMeta.characters);
+  const [cardTypeFilter, setCardTypeFilter] = useState<CardTypeMeta>(
+    cardTypeMeta.characters,
+  );
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
 
   // Affiliation filters for characters and team tactics
   const [affiliationSelection, setAffiliationSelection] = useState<string>(UNAFFILIATED);
-  const selectedAffiliationData = useMcpData(affiliationSelection ?? '', McpDataType.affiliation) as Affiliation;
-  const showAffiliationFilter = cardTypeFilter.cardType === McpDataType.character || cardTypeFilter.cardType === McpDataType.tactic;
+  const selectedAffiliationData = useMcpData(
+    affiliationSelection ?? '',
+    McpDataType.affiliation,
+  ) as Affiliation;
+  const showAffiliationFilter = cardTypeFilter.cardType === McpDataType.character
+    || cardTypeFilter.cardType === McpDataType.tactic;
 
-  const cards: string[] = state.cardLibraryStatus === Status.ready ? state[cardTypeFilter.dataKey] : [];
+  const cards: string[] = state.cardLibraryStatus === Status.ready
+    ? state[cardTypeFilter.dataKey]
+    : [];
 
-  const affiliationCards = cardTypeFilter.cardType === McpDataType.character ? selectedAffiliationData?.characterIds ?? null : selectedAffiliationData?.teamTactics ?? null;
+  const affiliationCards = cardTypeFilter.cardType === McpDataType.character
+    ? selectedAffiliationData?.characterIds ?? null
+    : selectedAffiliationData?.teamTactics ?? null;
   const withAffiliationFilter = showAffiliationFilter && affiliationSelection !== UNAFFILIATED
     ? affiliationCards
     : cards;
@@ -39,8 +57,12 @@ export const SearchPage: React.FC = () => {
   });
 
   const sortedFilteredCards = filteredCards.sort((cardIda, cardIdb) => {
-    if (cardIda > cardIdb) { return 1; }
-    if (cardIda < cardIdb) { return -1; }
+    if (cardIda > cardIdb) {
+      return 1;
+    }
+    if (cardIda < cardIdb) {
+      return -1;
+    }
     return 0;
   });
 
@@ -60,43 +82,64 @@ export const SearchPage: React.FC = () => {
             value={cardTypeFilter.dataKey}
             label="Card Type"
             onChange={(e) => {
-              setCardTypeFilter(cardTypeMeta[e.target.value as CardTypeKey] as CardTypeMeta);
+              setCardTypeFilter(
+                cardTypeMeta[e.target.value as CardTypeKey] as CardTypeMeta,
+              );
               setSearchTerm('');
             }}
           >
             {Object.values(cardTypeMeta).map((cardTypeMeta) => (
-              <MenuItem value={cardTypeMeta.dataKey} key={cardTypeMeta.dataKey}>{cardTypeMeta.label}</MenuItem>
+              <MenuItem value={cardTypeMeta.dataKey} key={cardTypeMeta.dataKey}>
+                {cardTypeMeta.label}
+              </MenuItem>
             ))}
-
           </Select>
         </FormControl>
         {showAffiliationFilter && (
-        <FormControl style={{ marginTop: 10 }}>
-          <InputLabel id="affiliation">Affiliation</InputLabel>
-          <Select
-            variant="standard"
-            value={affiliationSelection}
-            label="Card Type"
-            onChange={(e) => {
-              setAffiliationSelection(e.target.value);
-              setSearchTerm('');
-            }}
-          >
-            <MenuItem value={UNAFFILIATED} key={UNAFFILIATED}>All Affiliations</MenuItem>
-            {state.affiliations.map((id) => {
-              const affiliation = getCardForDataType(state, id, McpDataType.affiliation) as Affiliation;
-              return <MenuItem value={id} key={id}>{affiliation.name}</MenuItem>;
-            })}
-
-          </Select>
-        </FormControl>
+          <FormControl style={{ marginTop: 10 }}>
+            <InputLabel id="affiliation">Affiliation</InputLabel>
+            <Select
+              variant="standard"
+              value={affiliationSelection}
+              label="Card Type"
+              onChange={(e) => {
+                setAffiliationSelection(e.target.value);
+                setSearchTerm('');
+              }}
+            >
+              <MenuItem value={UNAFFILIATED} key={UNAFFILIATED}>
+                All Affiliations
+              </MenuItem>
+              {state.affiliations.map((id) => {
+                const affiliation = getCardForDataType(
+                  state,
+                  id,
+                  McpDataType.affiliation,
+                ) as Affiliation;
+                return (
+                  <MenuItem value={id} key={id}>
+                    {affiliation.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
         )}
       </CardSearchHeader>
 
-      <McpList cardType={cardTypeFilter.cardType} cards={sortedFilteredCards} selectCallback={(id: string) => setSelectedCard(id)} />
+      <McpList
+        cardType={cardTypeFilter.cardType}
+        cards={sortedFilteredCards}
+        selectCallback={(id: string) => setSelectedCard(id)}
+      />
 
-      {selectedCard !== null && <ModalCardContent onClose={() => setSelectedCard(null)} cardType={cardTypeFilter.cardType} cardId={selectedCard} />}
-
+      {selectedCard !== null && (
+        <ModalCardContent
+          onClose={() => setSelectedCard(null)}
+          cardType={cardTypeFilter.cardType}
+          cardId={selectedCard}
+        />
+      )}
     </div>
   );
 };

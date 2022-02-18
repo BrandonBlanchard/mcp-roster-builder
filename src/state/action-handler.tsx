@@ -1,5 +1,14 @@
 import {
-  ApplicationAction, createRosterReducer, deleteRosterReducer, loadCardDataReducer, loadRosterReducer, saveRosterReducer, setCardLibStatusReducer, setPageReducer, setSelectedRosterReducer, updateRosterReducer,
+  ApplicationAction,
+  createRosterReducer,
+  deleteRosterReducer,
+  loadCardDataReducer,
+  loadRosterReducer,
+  saveRosterReducer,
+  setCardLibStatusReducer,
+  setPageReducer,
+  setSelectedRosterReducer,
+  updateRosterReducer
 } from './actions';
 import { ApplicationState } from './models';
 
@@ -16,9 +25,9 @@ const actionHandler = (
       case 'setCardLibStatusAction':
         return setCardLibStatusReducer(state, action.data);
       case 'loadRosterAction':
-        return loadRosterReducer(state, action.data);
+        return loadRosterReducer(state);
       case 'saveRosterAction':
-        return saveRosterReducer(state, action.data);
+        return saveRosterReducer(state);
       case 'createRosterAction':
         return createRosterReducer(state, action.data);
       case 'deleteRosterAction':
@@ -31,8 +40,14 @@ const actionHandler = (
         return state;
     }
   } catch (e) {
-    // When a reducer throws an error, announce the issue and use the last good state to keep things rolling
-    console.error('ActionHandler failed at action: ', action, ' with error: ', e);
+    // When a reducer throws an error, announce the issue and use the
+    // last good state to keep things rolling
+    console.error(
+      'ActionHandler failed at action: ',
+      action,
+      ' with error: ',
+      e,
+    );
     return state;
   }
 };
